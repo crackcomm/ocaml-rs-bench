@@ -1,0 +1,4 @@
+(tests
+ (names fn_bench)
+ (libraries core_bench ocaml-rs-bench)
+ (preprocess no_preprocessing))

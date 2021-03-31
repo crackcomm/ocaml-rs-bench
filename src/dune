@@ -1,0 +1,23 @@
+(rule
+ (targets libocaml_rs_bench.a dllocaml_rs_bench.so)
+ (deps
+  (glob_files *.rs))
+ (action
+  (progn
+   (run sh -c "cd %{project_root} && cargo build --release --quiet")
+   (run
+    sh
+    -c
+    "rm -f dllocaml_rs_bench.so && cp %{project_root}/../target/release/libocaml_rs_bench.so dllocaml_rs_bench.so")
+   (run
+    sh
+    -c
+    "rm -f libocaml_rs_bench.a && cp %{project_root}/../target/release/libocaml_rs_bench.a libocaml_rs_bench.a"))))
+
+(library
+ (name ocaml_rs_bench)
+ (public_name ocaml-rs-bench)
+ (libraries core_kernel)
+ (foreign_archives ocaml_rs_bench)
+ (c_library_flags
+  (-lpthread -lc -lm)))
